@@ -1,7 +1,8 @@
 var fs = require('fs')
+var utils = require('./lib/utils')
 
 function queryData (req) {
-  var queryParam = parseGetQuery(req.url)
+  var queryParam = utils.parseGetQuery(req.url)
   // var dims = ""
   // if (queryParam.dims) {
   //   dims = queryParam.dims
@@ -23,12 +24,7 @@ function queryData (req) {
   var separator = '\t'
 
   for (var i = (queryPageData.index - 1) * queryPageData.size; i < fileLines.length; i++) {
-    var lineData = fileLines[i].split(separator)
-    var contentData = {}
-    for (var j = 0; j < fields.length; j++) {
-      var contentKey = fields[j]
-      contentData[contentKey] = lineData[j]
-    }
+    var contentData = utils.parseLineData(fields, fileLines[i], separator)
     contentLines.push(contentData)
 
     if (contentLines.length >= queryPageData.size) {
@@ -42,34 +38,6 @@ function queryData (req) {
     size: queryParam.size ? queryParam.size : 10,
     index: queryParam.index ? queryParam.index : 1
   }
-}
-
-function parseGetQuery (reqUrl) {
-  if (reqUrl.indexOf('?') <= 0) {
-    return {}
-  }
-
-  var queryStr = reqUrl.substr(reqUrl.indexOf('?') + 1)
-  var queryList = queryStr.split('&')
-
-  var queryData = {}
-  var aliasMap = {
-    'pn': 'index',
-    'ps': 'size'
-  }
-  for (var i = 0; i < queryList.length; i++) {
-    var paramData = queryList[i].split('=')
-    var paramKey = paramData[0]
-    var paramVal = paramData[1] ? paramData[1] : true
-    queryData[paramKey] = paramVal
-
-    if (aliasMap[paramKey]) {
-      var aliasKey = aliasMap[paramKey]
-      queryData[aliasKey] = paramVal
-    }
-  }
-
-  return queryData
 }
 
 module.exports = (req, res) => {
