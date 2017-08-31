@@ -1,11 +1,11 @@
 var fs = require('fs')
 
-function queryData(req) {
+function queryData (req) {
   var queryParam = parseGetQuery(req.url)
-  var dims = ""
-  if (queryParam.dims) {
-    dims = queryParam.dims
-  }
+  // var dims = ""
+  // if (queryParam.dims) {
+  //   dims = queryParam.dims
+  // }
   var queryPageData = {
     total: queryParam.total ? queryParam.total : 1,
     size: queryParam.size ? queryParam.size : 10,
@@ -31,7 +31,7 @@ function queryData(req) {
     }
     contentLines.push(contentData)
 
-    if (contentLines.length >= queryPageData.size){
+    if (contentLines.length >= queryPageData.size) {
       break
     }
   }
@@ -44,7 +44,7 @@ function queryData(req) {
   }
 }
 
-function parseGetQuery(reqUrl) {
+function parseGetQuery (reqUrl) {
   if (reqUrl.indexOf('?') <= 0) {
     return {}
   }
@@ -63,7 +63,7 @@ function parseGetQuery(reqUrl) {
     var paramVal = paramData[1] ? paramData[1] : true
     queryData[paramKey] = paramVal
 
-    if(aliasMap[paramKey]){
+    if (aliasMap[paramKey]) {
       var aliasKey = aliasMap[paramKey]
       queryData[aliasKey] = paramVal
     }
@@ -77,6 +77,6 @@ module.exports = (req, res) => {
     return queryData(req)
   }
   return {
-    date: new Date
+    date: new Date()
   }
 }
