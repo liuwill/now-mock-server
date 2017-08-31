@@ -1,0 +1,15 @@
+{
+  "name": "now-mock-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "micro",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "liuwill",
+  "license": "MIT",
+  "dependencies": {
+    "micro": "^8.0.3"
+  }
+}
