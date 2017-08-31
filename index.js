@@ -35,8 +35,8 @@ function queryData (req) {
   return {
     list: contentLines,
     total: fileLines.length,
-    size: queryParam.size ? queryParam.size : 10,
-    index: queryParam.index ? queryParam.index : 1
+    size: parseInt(queryPageData.size),
+    index: parseInt(queryPageData.index)
   }
 }
 
