@@ -1,0 +1,13 @@
+pipeline:
+  mock-server:
+    group: build
+    image: node
+    environment:
+      - NODE_ENV=production
+    commands:
+      - npm install
+      - npm run lint
+  notify:
+    email:
+      recipients:
+        - liuwei_will@qq.com
